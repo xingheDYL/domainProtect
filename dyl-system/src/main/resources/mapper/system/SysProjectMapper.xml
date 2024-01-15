@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dyl.system.mapper.SysProjectMapper">
+
+    <resultMap type="sysProject" id="SysProjectResult">
+        <id property="projectId" column="project_id" jdbcType="BIGINT"/>
+        <result property="projectName" column="project_name" jdbcType="VARCHAR"/>
+        <result property="projectLeaderName" column="project_leader_name" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="projectInput" column="project_input" jdbcType="VARCHAR"/>
+        <result property="projectOutput" column="project_output" jdbcType="VARCHAR"/>
+        <result property="projectProgress" column="project_progress" jdbcType="VARCHAR"/>
+        <result property="projectContent" column="project_content" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="CHAR"/>
+        <result property="startTime" column="start_time" jdbcType="TIMESTAMP"/>
+        <result property="endTime" column="end_time" jdbcType="TIMESTAMP"/>
+        <result property="sort" column="sort" jdbcType="INTEGER"/>
+        <result property="delFlag" column="del_flag" jdbcType="CHAR"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="selectProjectVo">
+        select p.project_id,
+               p.project_name,
+               p.project_leader_name,
+               p.user_id,
+               p.sort,
+               p.project_input,
+               p.project_output,
+               p.project_progress,
+               p.project_content,
+               p.status,
+               p.del_flag,
+               p.start_time,
+               p.end_time,
+               p.create_by,
+               p.create_time,
+               p.update_by,
+               p.update_time
+        from sys_project p
+    </sql>
+
+    <select id="selectProjectAll" resultMap="SysProjectResult">
+        <include refid="selectProjectVo"/>
+    </select>
+
+    <select id="selectProjectList" parameterType="sysProject" resultMap="SysProjectResult">
+        <include refid="selectProjectVo"/>
+        where p.del_flag = '0'
+        <if test="projectId != null and projectId != 0">
+            AND project_id = #{projectId}
+        </if>
+        <if test="userId != null and userId != 0">
+            AND user_id = #{userId}
+        </if>
+        <if test="projectName != null and projectName != ''">
+            AND project_name like concat('%', #{projectName}, '%')
+        </if>
+        <if test="status != null and status != ''">
+            AND status = #{status}
+        </if>
+        <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+            and date_format(p.create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+        </if>
+        <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+            and date_format(p.create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+        </if>
+        <!-- 数据范围过滤 -->
+        # ${params.dataScope}
+        order by p.sort
+    </select>
+
+    <select id="selectProjectListByRoleId" resultType="Long">
+        select d.dept_id
+        from sys_dept d
+        left join sys_role_dept rd on d.dept_id = rd.dept_id
+        where rd.role_id = #{roleId}
+        <if test="deptCheckStrictly">
+            and d.dept_id not in (select d.parent_id from sys_dept d inner join sys_role_dept rd on d.dept_id =
+            rd.dept_id and rd.role_id = #{roleId})
+        </if>
+        order by d.parent_id, d.order_num
+    </select>
+
+    <select id="selectProjectById" parameterType="Long" resultMap="SysProjectResult">
+        select p.project_id,
+               p.project_name,
+               p.sort,
+               p.project_leader_name,
+               p.status
+        from sys_project p
+        where p.project_id = #{projectId}
+    </select>
+
+    <select id="selectProjectListByUserId" parameterType="Long" resultMap="SysProjectResult">
+        select p.project_id, p.project_name, p.project_leader_name,p.status, up.support_start_time, up.support_end_time
+        from sys_project p
+                 left join sys_user_project up on up.project_id = p.project_id
+                 left join sys_user u on u.user_id = up.user_id
+        where u.user_id = #{userId}
+    </select>
+
+<!--    <select id="selectProjectListByUserId" parameterType="Long" resultMap="SysProjectResult">-->
+<!--        select p.project_id, p.project_name, p.project_leader_name, up.support_start_time, up.support_end_time-->
+<!--        from sys_user_project up-->
+<!--                 right join sys_project p on p.project_id = up.project_id-->
+<!--        where up.user_id = #{userId}-->
+<!--    </select>-->
+
+    <select id="checkProjectExistUser" parameterType="Long" resultType="int">
+        select count(1)
+        from sys_project
+        where user_id = #{userId}
+          and del_flag = '0'
+    </select>
+
+    <select id="checkProjectNameUnique" resultMap="SysProjectResult">
+        <include refid="selectProjectVo"/>
+        where project_name=#{projectName} and del_flag = '0' limit 1
+    </select>
+
+    <insert id="insertProject" parameterType="sysProject">
+        insert into sys_project(
+        <if test="projectId != null and projectId != 0">project_id,</if>
+        <if test="projectName != null and projectName != ''">project_name,</if>
+        <if test="sort != null">sort,</if>
+        <if test="projectLeaderName != null and projectLeaderName != ''">project_leader_name,</if>
+        <if test="status != null">status,</if>
+        <if test="createBy != null and createBy != ''">create_by,</if>
+        create_time
+        )values(
+        <if test="projectId != null and projectId != 0">#{projectId},</if>
+        <if test="projectName != null and projectName != ''">#{projectName},</if>
+        <if test="sort != null">#{sort},</if>
+        <if test="projectLeaderName != null and projectLeaderName != ''">#{projectLeaderName},</if>
+        <if test="status != null">#{status},</if>
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        sysdate()
+        )
+    </insert>
+
+    <update id="updateProject" parameterType="sysProject">
+        update sys_project
+        <set>
+            <if test="projectName != null and projectName != ''">project_name = #{projectName},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="projectLeaderName != null">project_leader_name = #{projectLeaderName},</if>
+            <if test="status != null and status != ''">status = #{status},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            update_time = sysdate()
+        </set>
+        where project_id = #{projectId}
+    </update>
+
+    <delete id="deleteProjectById" parameterType="Long">
+        update sys_project
+        set del_flag = '2'
+        where project_id = #{projectId}
+    </delete>
+
+</mapper>

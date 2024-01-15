@@ -1,0 +1,43 @@
+# spring配置
+spring:
+  datasource:
+    druid:
+      stat-view-servlet:
+        enabled: true
+        loginUsername: dyl
+        loginPassword: 123456
+    dynamic:
+      druid:
+        initial-size: 5
+        min-idle: 5
+        maxActive: 20
+        maxWait: 60000
+        timeBetweenEvictionRunsMillis: 60000
+        minEvictableIdleTimeMillis: 300000
+        validationQuery: SELECT 1 FROM DUAL
+        testWhileIdle: true
+        testOnBorrow: false
+        testOnReturn: false
+        poolPreparedStatements: true
+        maxPoolPreparedStatementPerConnectionSize: 20
+        filters: stat,slf4j
+        ## connectionProperties: druid.stat.mergeSql\=true;druid.stat.slowSqlMillis\=5000
+        connectionProperties:
+          druid:
+            stat:
+              mergeSql: true
+              slowSqlMillis: 5000
+      datasource:
+        # 主库数据源
+        master:
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://localhost:3306/projectmanage?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+          username: root
+          password: root
+        # 测试数据源
+        # 使用方法，在Mapper类或者方法上增加注解 @DS("test") 用于切换数据源
+        # test:
+        #   driver-class-name: com.mysql.jdbc.Driver
+        #   url: jdbc:mysql://localhost:3306/metaee-ds2test?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+        #   username: root
+        #   password: 12345678

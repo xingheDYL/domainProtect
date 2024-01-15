@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dyl.system.mapper.SysUserProjectMapper">
+
+    <resultMap type="sysUserProject" id="SysUserProjectResult">
+        <result property="userId" column="user_id"/>
+        <result property="projectId" column="project_id"/>
+        <result property="supportStartTime" column="support_start_time"/>
+        <result property="supportEndTime" column="support_end_time"/>
+    </resultMap>
+
+    <sql id="selectUserProjectVo">
+        select up.user_id,
+               up.project_id,
+               up.support_start_time,
+               up.support_end_time
+        from sys_user_project up
+    </sql>
+
+    <select id="selectUserProjectList" parameterType="sysUserProject" resultMap="SysUserProjectResult">
+        <include refid="selectUserProjectVo"/>
+        where
+        <if test="userId != null and userId != 0">
+            user_id = #{userId}
+        </if>
+        <if test="projectId != null and projectId != 0">
+            project_id = #{projectId}
+        </if>
+        <if test="params.beginTime != null and params.beginTime != ''"><!-- 支撑开始时间检索 -->
+            and date_format(up.support_start_time,'%y%m%d') &lt;= date_format(#{params.beginTime},'%y%m%d')
+        </if>
+        <if test="params.endTime != null and params.endTime != ''"><!-- 支撑结束时间检索 -->
+            and date_format(up.support_end_time,'%y%m%d') &gt;= date_format(#{params.endTime},'%y%m%d')
+        </if>
+        <!-- 数据范围过滤 -->
+        # ${params.dataScope}
+    </select>
+
+    <!--    <select id="selectUserProjectListByUserId" parameterType="Long" resultMap="SysUserProjectResult">-->
+    <!--        select p.project_id, p.project_name, p.project_leader_name,p.status, up.support_start_time, up.support_end_time-->
+    <!--        from sys_project p-->
+    <!--                 left join sys_user_project up on up.project_id = p.project_id-->
+    <!--                 left join sys_user u on u.user_id = up.user_id-->
+    <!--        where u.user_id = #{userId}-->
+    <!--    </select>-->
+
+    <select id="selectUserProjectListByUserId" parameterType="Long" resultMap="SysUserProjectResult">
+        select p.project_id,
+               p.project_name,
+               p.project_leader_name,
+               up.support_start_time,
+               up.support_end_time
+        from sys_user_project up
+                 left join sys_user u on up.user_id = u.user_id
+                 right join sys_project p on p.project_id = up.project_id
+        where up.user_id = #{userId}
+    </select>
+
+    <delete id="deleteUserProjectByUserId" parameterType="Long">
+        delete
+        from sys_user_project
+        where user_id = #{userId}
+    </delete>
+
+    <select id="countUserProjectById" resultType="Integer">
+        select count(1)
+        from sys_user_project
+        where project_id = #{projectId}
+    </select>
+
+    <delete id="deleteUserProject" parameterType="Long">
+        delete from sys_user_project where user_id in
+        <foreach collection="array" item="userId" open="(" separator="," close=")">
+            #{userId}
+        </foreach>
+    </delete>
+
+    <insert id="batchUserProject">
+        insert into sys_user_project(user_id, project_id,support_start_time,support_end_time) values
+        <foreach item="item" index="index" collection="list" separator=",">
+            (#{item.userId},#{item.projectId},#{item.supportStartTime},#{item.supportEndTime})
+        </foreach>
+    </insert>
+
+    <delete id="deleteUserProjectInfo" parameterType="SysUserProject">
+        delete
+        from sys_user_project
+        where user_id = #{userId}
+          and project_id = #{projectId}
+    </delete>
+
+    <delete id="deleteUserProjectInfos">
+        delete from sys_user_project where project_id=#{projectId} and user_id in
+        <foreach collection="userIds" item="userId" open="(" separator="," close=")">
+            #{userId}
+        </foreach>
+    </delete>
+
+</mapper> 
