@@ -1,9 +1,9 @@
 package com.dyl.common.core.text;
 
+import com.dyl.common.utils.StringUtils;
+
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-
-import com.dyl.common.utils.StringUtils;
 
 /**
  * 字符集工具类

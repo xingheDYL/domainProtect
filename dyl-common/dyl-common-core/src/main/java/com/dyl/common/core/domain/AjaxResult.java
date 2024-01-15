@@ -1,9 +1,9 @@
 package com.dyl.common.core.domain;
 
-import java.util.HashMap;
-
 import com.dyl.common.constant.HttpStatus;
 import com.dyl.common.utils.StringUtils;
+
+import java.util.HashMap;
 
 /**
  * 操作消息提醒

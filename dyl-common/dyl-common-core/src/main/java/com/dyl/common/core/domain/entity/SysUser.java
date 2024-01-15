@@ -1,17 +1,19 @@
 package com.dyl.common.core.domain.entity;
 
-import java.util.Date;
-import java.util.List;
-import javax.validation.constraints.*;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import com.dyl.common.annotation.Excel;
 import com.dyl.common.annotation.Excel.ColumnType;
 import com.dyl.common.annotation.Excel.Type;
 import com.dyl.common.annotation.Excels;
 import com.dyl.common.core.domain.BaseEntity;
 import com.dyl.common.xss.Xss;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import java.util.Date;
+import java.util.List;
 
 /**
  * 用户对象 sys_user
@@ -86,15 +88,9 @@ public class SysUser extends BaseEntity {
     private String status;
 
     /**
-     * 删除标志（0代表存在 2代表删除）
+     * 删除标志（0-存在 2-删除）
      */
     private String delFlag;
-
-    /**
-     * 最后登录IP
-     */
-    @Excel(name = "最后登录IP", type = Type.EXPORT)
-    private String loginIp;
 
     /**
      * 最后登录时间
@@ -122,25 +118,9 @@ public class SysUser extends BaseEntity {
     private Long[] roleIds;
 
     /**
-     * 岗位组
-     */
-    private Long[] postIds;
-
-    /**
      * 角色ID
      */
     private Long roleId;
-
-    /**
-     * 项目ID
-     */
-    private Long projectId;
-
-
-    /**
-     * 项目组
-     */
-    private Long[] projectIds;
 
     public SysUser() {
 
@@ -172,14 +152,6 @@ public class SysUser extends BaseEntity {
 
     public void setDeptId(Long deptId) {
         this.deptId = deptId;
-    }
-
-    public Long getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(Long projectId) {
-        this.projectId = projectId;
     }
 
     @Xss(message = "用户昵称不能包含脚本字符")
@@ -270,14 +242,6 @@ public class SysUser extends BaseEntity {
         this.delFlag = delFlag;
     }
 
-    public String getLoginIp() {
-        return loginIp;
-    }
-
-    public void setLoginIp(String loginIp) {
-        this.loginIp = loginIp;
-    }
-
     public Date getLoginDate() {
         return loginDate;
     }
@@ -310,14 +274,6 @@ public class SysUser extends BaseEntity {
         this.roleIds = roleIds;
     }
 
-    public Long[] getPostIds() {
-        return postIds;
-    }
-
-    public void setPostIds(Long[] postIds) {
-        this.postIds = postIds;
-    }
-
     public Long getRoleId() {
         return roleId;
     }
@@ -325,21 +281,11 @@ public class SysUser extends BaseEntity {
     public void setRoleId(Long roleId) {
         this.roleId = roleId;
     }
-
-    public Long[] getProjectIds() {
-        return projectIds;
-    }
-
-    public void setProjectIds(Long[] projectIds) {
-        this.projectIds = projectIds;
-    }
-
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
                 .append("userId", getUserId())
                 .append("deptId", getDeptId())
-                .append("projectId", getProjectId())
                 .append("userName", getUserName())
                 .append("nickName", getNickName())
                 .append("email", getEmail())
@@ -350,7 +296,6 @@ public class SysUser extends BaseEntity {
                 .append("password", getPassword())
                 .append("status", getStatus())
                 .append("delFlag", getDelFlag())
-                .append("loginIp", getLoginIp())
                 .append("loginDate", getLoginDate())
                 .append("createBy", getCreateBy())
                 .append("createTime", getCreateTime())

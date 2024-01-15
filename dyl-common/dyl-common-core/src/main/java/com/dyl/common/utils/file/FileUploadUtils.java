@@ -1,12 +1,5 @@
 package com.dyl.common.utils.file;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Paths;
-import java.util.Objects;
-
-import org.apache.commons.io.FilenameUtils;
-import org.springframework.web.multipart.MultipartFile;
 import com.dyl.common.config.BaseConfig;
 import com.dyl.common.constant.Constants;
 import com.dyl.common.exception.file.FileNameLengthLimitExceededException;
@@ -15,6 +8,13 @@ import com.dyl.common.exception.file.InvalidExtensionException;
 import com.dyl.common.utils.DateUtils;
 import com.dyl.common.utils.StringUtils;
 import com.dyl.common.utils.uuid.Seq;
+import org.apache.commons.io.FilenameUtils;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Paths;
+import java.util.Objects;
 
 /**
  * 文件上传工具类

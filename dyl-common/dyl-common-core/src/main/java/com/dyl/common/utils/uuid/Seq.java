@@ -1,9 +1,9 @@
 package com.dyl.common.utils.uuid;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 import com.dyl.common.utils.DateUtils;
 import com.dyl.common.utils.StringUtils;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author dyl 序列生成类

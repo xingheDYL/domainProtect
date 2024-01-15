@@ -1,12 +1,11 @@
 package com.dyl.common.core.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.baomidou.mybatisplus.annotation.TableField;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Tree基类

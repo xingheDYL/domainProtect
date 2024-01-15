@@ -1,13 +1,13 @@
 package com.dyl.common.utils;
 
-import java.util.Collection;
-import java.util.List;
-
 import com.alibaba.fastjson2.JSONArray;
 import com.dyl.common.constant.CacheConstants;
 import com.dyl.common.core.domain.entity.SysDictData;
 import com.dyl.common.core.redis.RedisCache;
 import com.dyl.common.utils.spring.SpringUtils;
+
+import java.util.Collection;
+import java.util.List;
 
 /**
  * 字典工具类

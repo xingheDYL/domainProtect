@@ -1,17 +1,18 @@
 package com.dyl.common.web.config;
 
-import java.util.HashMap;
-import java.util.Map;
-import javax.servlet.DispatcherType;
-
+import com.dyl.common.filter.RepeatableFilter;
+import com.dyl.common.filter.XssFilter;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import com.dyl.common.filter.RepeatableFilter;
-import com.dyl.common.filter.XssFilter;
-import com.dyl.common.utils.StringUtils;
+import org.springframework.core.Ordered;
+
+import javax.servlet.DispatcherType;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Filter配置
@@ -35,8 +36,8 @@ public class FilterConfig {
         registration.setFilter(new XssFilter());
         registration.addUrlPatterns(StringUtils.split(urlPatterns, ","));
         registration.setName("xssFilter");
-        registration.setOrder(FilterRegistrationBean.HIGHEST_PRECEDENCE);
-        Map<String, String> initParameters = new HashMap<String, String>();
+        registration.setOrder(Ordered.HIGHEST_PRECEDENCE);
+        Map<String, String> initParameters = new HashMap<>();
         initParameters.put("excludes", excludes);
         registration.setInitParameters(initParameters);
         return registration;
@@ -49,7 +50,7 @@ public class FilterConfig {
         registration.setFilter(new RepeatableFilter());
         registration.addUrlPatterns("/*");
         registration.setName("repeatableFilter");
-        registration.setOrder(FilterRegistrationBean.LOWEST_PRECEDENCE);
+        registration.setOrder(Ordered.LOWEST_PRECEDENCE);
         return registration;
     }
 

@@ -1,8 +1,8 @@
 package com.dyl.system.service;
 
-import java.util.List;
-
 import com.dyl.common.core.domain.entity.SysUser;
+
+import java.util.List;
 
 /**
  * 用户 业务层
@@ -34,23 +34,6 @@ public interface ISysUserService {
      */
     public List<SysUser> selectUnallocatedList(SysUser user);
 
-
-    /**
-     * 根据条件分页查询已分配用户项目列表
-     *
-     * @param user 用户信息
-     * @return 用户信息集合信息
-     */
-    public List<SysUser> selectAllocatedProjectsList(SysUser user);
-
-    /**
-     * 根据条件分页查询未分配用户项目列表
-     *
-     * @param user 用户信息
-     * @return 用户信息集合信息
-     */
-    public List<SysUser> selectUnallocatedProjectList(SysUser user);
-
     /**
      * 通过用户名查询用户
      *
@@ -74,15 +57,6 @@ public interface ISysUserService {
      * @return 结果
      */
     public String selectUserRoleGroup(String userName);
-
-    /**
-     * 根据用户ID查询用户所属岗位组
-     *
-     * @param userName 用户名
-     * @return 结果
-     */
-    public String selectUserPostGroup(String userName);
-
 
     /**
      * 校验用户名称是否唯一

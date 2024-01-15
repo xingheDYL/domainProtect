@@ -1,18 +1,18 @@
 package com.dyl.system.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
-
 import com.dyl.common.core.domain.entity.SysUser;
 import com.dyl.common.core.domain.model.LoginUser;
 import com.dyl.common.enums.UserStatus;
 import com.dyl.common.exception.ServiceException;
 import com.dyl.common.utils.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 /**
  * 用户验证处理
@@ -23,13 +23,13 @@ import com.dyl.common.utils.StringUtils;
 public class UserDetailsServiceImpl implements UserDetailsService {
     private static final Logger log = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
 
-    @Autowired
+    @Resource
     private ISysUserService userService;
 
-    @Autowired
+    @Resource
     private SysPasswordService passwordService;
 
-    @Autowired
+    @Resource
     private SysPermissionService permissionService;
 
     @Override
@@ -45,9 +45,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             log.info("登录用户：{} 已被停用.", username);
             throw new ServiceException("对不起，您的账号：" + username + " 已停用");
         }
-
         passwordService.validate(user);
-
         return createLoginUser(user);
     }
 

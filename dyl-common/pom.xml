@@ -5,19 +5,17 @@
     <parent>
         <groupId>com.dyl</groupId>
         <artifactId>dyl</artifactId>
-        <version>3.8.5</version>
+        <version>1.0.0</version>
     </parent>
     <artifactId>dyl-common</artifactId>
     <packaging>pom</packaging>
     <description>通用模块</description>
 
     <modules>
-        <module>dyl-common-api</module>
         <module>dyl-common-core</module>
         <module>dyl-common-mybatis</module>
         <module>dyl-common-security</module>
         <module>dyl-common-web</module>
-        <module>dyl-common-log</module>
     </modules>
 
 </project>

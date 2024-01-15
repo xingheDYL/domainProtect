@@ -1,12 +1,5 @@
 package com.dyl.system.service.impl;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import com.dyl.common.annotation.DataScope;
 import com.dyl.common.constant.UserConstants;
 import com.dyl.common.core.domain.TreeSelect;
@@ -21,6 +14,13 @@ import com.dyl.common.utils.spring.SpringUtils;
 import com.dyl.system.mapper.SysDeptMapper;
 import com.dyl.system.mapper.SysRoleMapper;
 import com.dyl.system.service.ISysDeptService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 部门管理 服务实现

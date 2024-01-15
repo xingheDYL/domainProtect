@@ -23,9 +23,7 @@ dyl
 ├── dyl-ui                   // 前端框架 [80]
 ├── dyl-admin                // 应用后台 [8080]
 ├── dyl-common               // 通用模块
-    ├── dyl-common-api          // 各模块聚合api
     ├── dyl-common-core         // 核心工具
-    ├── dyl-common-log          // 日志记录    
     ├── dyl-common-mybatis      // 数据库访问
     ├── dyl-common-security     // 登录安全认证
     ├── dyl-common-web          // web服务

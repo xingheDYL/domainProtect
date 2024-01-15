@@ -1,14 +1,5 @@
 package com.dyl.system.service.impl;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import com.dyl.common.annotation.DataScope;
 import com.dyl.common.constant.UserConstants;
 import com.dyl.common.core.domain.entity.SysRole;
@@ -25,6 +16,11 @@ import com.dyl.system.mapper.SysRoleMapper;
 import com.dyl.system.mapper.SysRoleMenuMapper;
 import com.dyl.system.mapper.SysUserRoleMapper;
 import com.dyl.system.service.ISysRoleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.*;
 
 /**
  * 角色 业务层处理

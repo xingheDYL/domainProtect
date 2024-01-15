@@ -1,14 +1,14 @@
 package com.dyl.common.security.service;
 
-import java.util.Set;
-
-import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 import com.dyl.common.core.domain.entity.SysRole;
 import com.dyl.common.core.domain.model.LoginUser;
+import com.dyl.common.security.context.PermissionContextHolder;
 import com.dyl.common.utils.SecurityUtils;
 import com.dyl.common.utils.StringUtils;
-import com.dyl.common.security.context.PermissionContextHolder;
+import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+
+import java.util.Set;
 
 /**
  * 自定义权限实现，ss取自SpringSecurity首字母
@@ -56,7 +56,7 @@ public class PermissionService {
      * @return 用户是否不具备某权限
      */
     public boolean lacksPermi(String permission) {
-        return hasPermi(permission) != true;
+        return !hasPermi(permission);
     }
 
     /**

@@ -1,22 +1,18 @@
 package com.dyl.system.service;
 
-import java.util.concurrent.TimeUnit;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Component;
 import com.dyl.common.constant.CacheConstants;
-import com.dyl.common.constant.Constants;
 import com.dyl.common.core.domain.entity.SysUser;
 import com.dyl.common.core.redis.RedisCache;
 import com.dyl.common.exception.user.UserPasswordNotMatchException;
 import com.dyl.common.exception.user.UserPasswordRetryLimitExceedException;
-import com.dyl.common.log.manager.factory.AsyncFactory;
-import com.dyl.common.log.manager.AsyncManager;
-import com.dyl.common.utils.MessageUtils;
-import com.dyl.common.utils.SecurityUtils;
 import com.dyl.common.security.context.AuthenticationContextHolder;
+import com.dyl.common.utils.SecurityUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Component;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * 登录密码方法
@@ -55,16 +51,12 @@ public class SysPasswordService {
             retryCount = 0;
         }
 
-        if (retryCount >= Integer.valueOf(maxRetryCount).intValue()) {
-            AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL,
-                    MessageUtils.message("user.password.retry.limit.exceed", maxRetryCount, lockTime)));
+        if (retryCount >= maxRetryCount) {
             throw new UserPasswordRetryLimitExceedException(maxRetryCount, lockTime);
         }
 
         if (!matches(user, password)) {
             retryCount = retryCount + 1;
-            AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL,
-                    MessageUtils.message("user.password.retry.limit.count", retryCount)));
             redisCache.setCacheObject(getCacheKey(username), retryCount, lockTime, TimeUnit.MINUTES);
             throw new UserPasswordNotMatchException();
         } else {
@@ -77,7 +69,7 @@ public class SysPasswordService {
     }
 
     public void clearLoginRecordCache(String loginName) {
-        if (redisCache.hasKey(getCacheKey(loginName))) {
+        if (Boolean.TRUE.equals(redisCache.hasKey(getCacheKey(loginName)))) {
             redisCache.deleteObject(getCacheKey(loginName));
         }
     }

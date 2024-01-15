@@ -1,15 +1,5 @@
 package com.dyl.common.core.controller;
 
-import java.beans.PropertyEditorSupport;
-import java.util.Date;
-import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.dyl.common.constant.HttpStatus;
 import com.dyl.common.core.domain.AjaxResult;
 import com.dyl.common.core.domain.model.LoginUser;
@@ -21,6 +11,16 @@ import com.dyl.common.utils.PageUtils;
 import com.dyl.common.utils.SecurityUtils;
 import com.dyl.common.utils.StringUtils;
 import com.dyl.common.utils.sql.SqlUtil;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+
+import java.beans.PropertyEditorSupport;
+import java.util.Date;
+import java.util.List;
 
 /**
  * web层通用数据处理

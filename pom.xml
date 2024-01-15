@@ -6,13 +6,13 @@
 
     <groupId>com.dyl</groupId>
     <artifactId>dyl</artifactId>
-    <version>1.1.1</version>
+    <version>1.0.0</version>
 
     <name>dyl</name>
-    <description>域名解析系统</description>
+    <description>启铭星防护查询系统</description>
 
     <properties>
-        <dyl.version>1.1.1</dyl.version>
+        <dyl.version>1.0.0</dyl.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
@@ -55,13 +55,6 @@
                 <version>${druid.version}</version>
             </dependency>
 
-            <!-- 解析客户端操作系统、浏览器等 -->
-            <dependency>
-                <groupId>eu.bitwalker</groupId>
-                <artifactId>UserAgentUtils</artifactId>
-                <version>${bitwalker.version}</version>
-            </dependency>
-
             <!-- pagehelper 分页插件 -->
             <dependency>
                 <groupId>com.github.pagehelper</groupId>
@@ -83,13 +76,6 @@
                 <version>${dynamic-datasource.version}</version>
             </dependency>
 
-            <!-- 获取系统信息 -->
-            <dependency>
-                <groupId>com.github.oshi</groupId>
-                <artifactId>oshi-core</artifactId>
-                <version>${oshi.version}</version>
-            </dependency>
-
             <!-- knife4j -->
             <dependency>
                 <groupId>com.github.xiaoymin</groupId>
@@ -109,13 +95,6 @@
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi-ooxml</artifactId>
                 <version>${poi.version}</version>
-            </dependency>
-
-            <!-- velocity代码生成使用模板 -->
-            <dependency>
-                <groupId>org.apache.velocity</groupId>
-                <artifactId>velocity-engine-core</artifactId>
-                <version>${velocity.version}</version>
             </dependency>
 
             <!-- collections工具类 -->
@@ -181,13 +160,6 @@
                 <version>${dyl.version}</version>
             </dependency>
 
-            <!-- 日志记录 -->
-            <dependency>
-                <groupId>com.dyl</groupId>
-                <artifactId>dyl-common-log</artifactId>
-                <version>${dyl.version}</version>
-            </dependency>
-
             <!-- 安全认证模块 -->
             <dependency>
                 <groupId>com.dyl</groupId>
@@ -201,14 +173,6 @@
                 <artifactId>dyl-common-web</artifactId>
                 <version>${dyl.version}</version>
             </dependency>
-
-            <!-- 各模块api -->
-            <dependency>
-                <groupId>com.dyl</groupId>
-                <artifactId>dyl-common-api</artifactId>
-                <version>${dyl.version}</version>
-            </dependency>
-
         </dependencies>
     </dependencyManagement>
 

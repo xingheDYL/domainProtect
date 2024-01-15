@@ -1,18 +1,18 @@
 package com.dyl.common.security.handle;
 
-import java.io.IOException;
-import java.io.Serializable;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.web.AuthenticationEntryPoint;
-import org.springframework.stereotype.Component;
 import com.alibaba.fastjson2.JSON;
 import com.dyl.common.constant.HttpStatus;
 import com.dyl.common.core.domain.AjaxResult;
 import com.dyl.common.utils.ServletUtils;
 import com.dyl.common.utils.StringUtils;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.stereotype.Component;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.Serializable;
 
 /**
  * 认证失败处理类 返回未授权

@@ -1,21 +1,21 @@
 package com.dyl.common.mybatis.aspectj;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.springframework.stereotype.Component;
 import com.dyl.common.annotation.DataScope;
 import com.dyl.common.core.domain.BaseEntity;
 import com.dyl.common.core.domain.entity.SysRole;
 import com.dyl.common.core.domain.entity.SysUser;
 import com.dyl.common.core.domain.model.LoginUser;
 import com.dyl.common.core.text.Convert;
+import com.dyl.common.security.context.PermissionContextHolder;
 import com.dyl.common.utils.SecurityUtils;
 import com.dyl.common.utils.StringUtils;
-import com.dyl.common.security.context.PermissionContextHolder;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 数据过滤处理

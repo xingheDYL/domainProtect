@@ -1,10 +1,11 @@
 package com.dyl.admin.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import com.dyl.common.config.BaseConfig;
 import com.dyl.common.utils.StringUtils;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
 
 /**
  * 首页
@@ -16,7 +17,7 @@ public class IndexController {
     /**
      * 系统基础配置
      */
-    @Autowired
+    @Resource
     private BaseConfig baseConfig;
 
     /**

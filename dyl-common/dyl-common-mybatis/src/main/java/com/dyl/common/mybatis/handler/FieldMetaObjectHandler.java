@@ -3,7 +3,6 @@ package com.dyl.common.mybatis.handler;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.dyl.common.core.domain.model.LoginUser;
 import com.dyl.common.utils.SecurityUtils;
-
 import org.apache.ibatis.reflection.MetaObject;
 
 import java.util.Date;
@@ -14,11 +13,11 @@ import java.util.Date;
  * @author dyl
  */
 public class FieldMetaObjectHandler implements MetaObjectHandler {
-    private final static String CREATE_TIME = "createTime";
-    private final static String CREATE_BY = "createBy";
-    private final static String UPDATE_TIME = "updateTime";
-    private final static String UPDATE_BY = "updateBy";
-    private final static String DEL_FLAG = "delFlag";
+    private static final String CREATE_TIME = "createTime";
+    private static final String CREATE_BY = "createBy";
+    private static final String UPDATE_TIME = "updateTime";
+    private static final String UPDATE_BY = "updateBy";
+    private static final String DEL_FLAG = "delFlag";
 
     @Override
     public void insertFill(MetaObject metaObject) {

@@ -1,11 +1,5 @@
 package com.dyl.system.service.impl;
 
-import java.util.Collection;
-import java.util.List;
-import javax.annotation.PostConstruct;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import com.dyl.common.constant.CacheConstants;
 import com.dyl.common.constant.UserConstants;
 import com.dyl.common.core.redis.RedisCache;
@@ -15,6 +9,12 @@ import com.dyl.common.utils.StringUtils;
 import com.dyl.system.domain.SysConfig;
 import com.dyl.system.mapper.SysConfigMapper;
 import com.dyl.system.service.ISysConfigService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.PostConstruct;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * 参数配置 服务层实现
@@ -70,20 +70,6 @@ public class SysConfigServiceImpl implements ISysConfigService {
             return retConfig.getConfigValue();
         }
         return StringUtils.EMPTY;
-    }
-
-    /**
-     * 获取验证码开关
-     *
-     * @return true开启，false关闭
-     */
-    @Override
-    public boolean selectCaptchaEnabled() {
-        String captchaEnabled = selectConfigByKey("sys.account.captchaEnabled");
-        if (StringUtils.isEmpty(captchaEnabled)) {
-            return true;
-        }
-        return Convert.toBool(captchaEnabled);
     }
 
     /**

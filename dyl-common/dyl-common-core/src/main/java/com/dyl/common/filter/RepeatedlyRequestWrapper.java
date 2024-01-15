@@ -1,17 +1,17 @@
 package com.dyl.common.filter;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import com.dyl.common.constant.Constants;
+import com.dyl.common.utils.http.HttpHelper;
+
 import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
-
-import com.dyl.common.utils.http.HttpHelper;
-import com.dyl.common.constant.Constants;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * 构建可重复读取inputStream的request

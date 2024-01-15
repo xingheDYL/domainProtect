@@ -1,8 +1,8 @@
 package com.dyl.common.security.context;
 
+import com.dyl.common.core.text.Convert;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
-import com.dyl.common.core.text.Convert;
 
 /**
  * 权限信息

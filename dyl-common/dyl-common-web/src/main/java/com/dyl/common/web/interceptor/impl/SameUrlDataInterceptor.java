@@ -1,21 +1,21 @@
 package com.dyl.common.web.interceptor.impl;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 import com.alibaba.fastjson2.JSON;
 import com.dyl.common.annotation.RepeatSubmit;
 import com.dyl.common.constant.CacheConstants;
 import com.dyl.common.core.redis.RedisCache;
 import com.dyl.common.filter.RepeatedlyRequestWrapper;
-import com.dyl.common.utils.StringUtils;
 import com.dyl.common.utils.http.HttpHelper;
 import com.dyl.common.web.interceptor.RepeatSubmitInterceptor;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 判断请求url和数据是否和上一次相同，
@@ -25,15 +25,15 @@ import com.dyl.common.web.interceptor.RepeatSubmitInterceptor;
  */
 @Component
 public class SameUrlDataInterceptor extends RepeatSubmitInterceptor {
-    public final String REPEAT_PARAMS = "repeatParams";
+    public static final String REPEAT_PARAMS = "repeatParams";
 
-    public final String REPEAT_TIME = "repeatTime";
+    public static final String REPEAT_TIME = "repeatTime";
 
     // 令牌自定义标识
     @Value("${token.header}")
     private String header;
 
-    @Autowired
+    @Resource
     private RedisCache redisCache;
 
     @SuppressWarnings("unchecked")
@@ -49,7 +49,7 @@ public class SameUrlDataInterceptor extends RepeatSubmitInterceptor {
         if (StringUtils.isEmpty(nowParams)) {
             nowParams = JSON.toJSONString(request.getParameterMap());
         }
-        Map<String, Object> nowDataMap = new HashMap<String, Object>();
+        Map<String, Object> nowDataMap = new HashMap<>();
         nowDataMap.put(REPEAT_PARAMS, nowParams);
         nowDataMap.put(REPEAT_TIME, System.currentTimeMillis());
 
@@ -72,7 +72,7 @@ public class SameUrlDataInterceptor extends RepeatSubmitInterceptor {
                 }
             }
         }
-        Map<String, Object> cacheMap = new HashMap<String, Object>();
+        Map<String, Object> cacheMap = new HashMap<>();
         cacheMap.put(url, nowDataMap);
         redisCache.setCacheObject(cacheRepeatKey, cacheMap, annotation.interval(), TimeUnit.MILLISECONDS);
         return false;
@@ -93,9 +93,6 @@ public class SameUrlDataInterceptor extends RepeatSubmitInterceptor {
     private boolean compareTime(Map<String, Object> nowMap, Map<String, Object> preMap, int interval) {
         long time1 = (Long) nowMap.get(REPEAT_TIME);
         long time2 = (Long) preMap.get(REPEAT_TIME);
-        if ((time1 - time2) < interval) {
-            return true;
-        }
-        return false;
+        return (time1 - time2) < interval;
     }
 }

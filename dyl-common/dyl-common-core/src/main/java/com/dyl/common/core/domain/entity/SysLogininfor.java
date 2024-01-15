@@ -1,11 +1,11 @@
 package com.dyl.common.core.domain.entity;
 
-import java.util.Date;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.dyl.common.annotation.Excel;
 import com.dyl.common.annotation.Excel.ColumnType;
 import com.dyl.common.core.domain.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.util.Date;
 
 /**
  * 系统访问记录表 sys_logininfor

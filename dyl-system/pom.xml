@@ -5,7 +5,7 @@
     <parent>
         <artifactId>dyl</artifactId>
         <groupId>com.dyl</groupId>
-        <version>3.8.5</version>
+        <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -34,13 +34,6 @@
             <groupId>com.dyl</groupId>
             <artifactId>dyl-common-web</artifactId>
         </dependency>
-
-        <!-- 各模块聚合api -->
-        <dependency>
-            <groupId>com.dyl</groupId>
-            <artifactId>dyl-common-api</artifactId>
-        </dependency>
-
     </dependencies>
 
 </project>

@@ -1,27 +1,17 @@
 package com.dyl.system.controller;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.dyl.common.constant.UserConstants;
 import com.dyl.common.core.controller.BaseController;
 import com.dyl.common.core.domain.AjaxResult;
 import com.dyl.common.core.domain.entity.SysMenu;
-import com.dyl.common.enums.BusinessType;
-import com.dyl.common.log.annotation.Log;
 import com.dyl.common.utils.StringUtils;
 import com.dyl.system.service.ISysMenuService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 菜单信息
@@ -78,7 +68,6 @@ public class SysMenuController extends BaseController {
      * 新增菜单
      */
     @PreAuthorize("@ss.hasPermi('system:menu:add')")
-    @Log(title = "菜单管理", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@Validated @RequestBody SysMenu menu) {
         if (!menuService.checkMenuNameUnique(menu)) {
@@ -94,7 +83,6 @@ public class SysMenuController extends BaseController {
      * 修改菜单
      */
     @PreAuthorize("@ss.hasPermi('system:menu:edit')")
-    @Log(title = "菜单管理", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@Validated @RequestBody SysMenu menu) {
         if (!menuService.checkMenuNameUnique(menu)) {
@@ -112,7 +100,6 @@ public class SysMenuController extends BaseController {
      * 删除菜单
      */
     @PreAuthorize("@ss.hasPermi('system:menu:remove')")
-    @Log(title = "菜单管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{menuId}")
     public AjaxResult remove(@PathVariable("menuId") Long menuId) {
         if (menuService.hasChildByMenuId(menuId)) {

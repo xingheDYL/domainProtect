@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
  * @author dyl
  */
 @Component
-@ConfigurationProperties(prefix = "dyl")
+@ConfigurationProperties(prefix = "wqm")
 public class BaseConfig {
     /**
      * 项目名称

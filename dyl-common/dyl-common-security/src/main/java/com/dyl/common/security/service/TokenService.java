@@ -1,26 +1,22 @@
 package com.dyl.common.security.service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 import com.dyl.common.constant.CacheConstants;
 import com.dyl.common.constant.Constants;
 import com.dyl.common.core.domain.model.LoginUser;
 import com.dyl.common.core.redis.RedisCache;
-import com.dyl.common.utils.ServletUtils;
 import com.dyl.common.utils.StringUtils;
-//import com.dyl.common.utils.ip.AddressUtils;
-import com.dyl.common.utils.ip.IpUtils;
 import com.dyl.common.utils.uuid.IdUtils;
-import eu.bitwalker.useragentutils.UserAgent;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * token验证处理
@@ -64,9 +60,8 @@ public class TokenService {
                 // 解析对应的权限以及用户信息
                 String uuid = (String) claims.get(Constants.LOGIN_USER_KEY);
                 String userKey = getTokenKey(uuid);
-                LoginUser user = redisCache.getCacheObject(userKey);
-                return user;
-            } catch (Exception e) {
+                return redisCache.getCacheObject(userKey);
+            } catch (Exception ignored) {
             }
         }
         return null;
@@ -100,7 +95,7 @@ public class TokenService {
     public String createToken(LoginUser loginUser) {
         String token = IdUtils.fastUUID();
         loginUser.setToken(token);
-        setUserAgent(loginUser);
+//        setUserAgent(loginUser);
         refreshToken(loginUser);
 
         Map<String, Object> claims = new HashMap<>();
@@ -135,19 +130,18 @@ public class TokenService {
         redisCache.setCacheObject(userKey, loginUser, expireTime, TimeUnit.MINUTES);
     }
 
-    /**
-     * 设置用户代理信息
-     *
-     * @param loginUser 登录信息
-     */
-    public void setUserAgent(LoginUser loginUser) {
-        UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader("User-Agent"));
-        String ip = IpUtils.getIpAddr();
-        loginUser.setIpaddr(ip);
-//        loginUser.setLoginLocation(AddressUtils.getRealAddressByIP(ip));
-        loginUser.setBrowser(userAgent.getBrowser().getName());
-        loginUser.setOs(userAgent.getOperatingSystem().getName());
-    }
+//    /**
+//     * 设置用户代理信息
+//     *
+//     * @param loginUser 登录信息
+//     */
+//    public void setUserAgent(LoginUser loginUser) {
+//        UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader("User-Agent"));
+//        String ip = IpUtils.getIpAddr();
+//        loginUser.setIpaddr(ip);
+////        loginUser.setLoginLocation(AddressUtils.getRealAddressByIP(ip));
+//        loginUser.setBrowser(userAgent.getBrowser().getName());
+//    }
 
     /**
      * 从数据声明生成令牌
@@ -156,10 +150,9 @@ public class TokenService {
      * @return 令牌
      */
     private String createToken(Map<String, Object> claims) {
-        String token = Jwts.builder()
+        return Jwts.builder()
                 .setClaims(claims)
                 .signWith(SignatureAlgorithm.HS512, secret).compact();
-        return token;
     }
 
     /**

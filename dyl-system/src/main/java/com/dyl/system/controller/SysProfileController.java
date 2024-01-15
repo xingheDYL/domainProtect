@@ -1,28 +1,19 @@
 package com.dyl.system.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.dyl.common.config.BaseConfig;
 import com.dyl.common.core.controller.BaseController;
 import com.dyl.common.core.domain.AjaxResult;
 import com.dyl.common.core.domain.entity.SysUser;
 import com.dyl.common.core.domain.model.LoginUser;
-import com.dyl.common.enums.BusinessType;
-import com.dyl.common.log.annotation.Log;
 import com.dyl.common.security.service.TokenService;
 import com.dyl.common.utils.SecurityUtils;
 import com.dyl.common.utils.StringUtils;
 import com.dyl.common.utils.file.FileUploadUtils;
 import com.dyl.common.utils.file.MimeTypeUtils;
 import com.dyl.system.service.ISysUserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 个人信息 业务处理
@@ -47,14 +38,12 @@ public class SysProfileController extends BaseController {
         SysUser user = loginUser.getUser();
         AjaxResult ajax = AjaxResult.success(user);
         ajax.put("roleGroup", userService.selectUserRoleGroup(loginUser.getUsername()));
-        ajax.put("postGroup", userService.selectUserPostGroup(loginUser.getUsername()));
         return ajax;
     }
 
     /**
      * 修改用户
      */
-    @Log(title = "个人信息", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult updateProfile(@RequestBody SysUser user) {
         LoginUser loginUser = getLoginUser();
@@ -85,7 +74,6 @@ public class SysProfileController extends BaseController {
     /**
      * 重置密码
      */
-    @Log(title = "个人信息", businessType = BusinessType.UPDATE)
     @PutMapping("/updatePwd")
     public AjaxResult updatePwd(String oldPassword, String newPassword) {
         LoginUser loginUser = getLoginUser();
@@ -109,7 +97,6 @@ public class SysProfileController extends BaseController {
     /**
      * 头像上传
      */
-    @Log(title = "用户头像", businessType = BusinessType.UPDATE)
     @PostMapping("/avatar")
     public AjaxResult avatar(@RequestParam("avatarfile") MultipartFile file) throws Exception {
         if (!file.isEmpty()) {

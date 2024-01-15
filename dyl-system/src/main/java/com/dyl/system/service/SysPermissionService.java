@@ -1,14 +1,13 @@
 package com.dyl.system.service;
 
+import com.dyl.common.core.domain.entity.SysRole;
+import com.dyl.common.core.domain.entity.SysUser;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import com.dyl.common.core.domain.entity.SysRole;
-import com.dyl.common.core.domain.entity.SysUser;
 
 /**
  * 用户权限处理
@@ -17,10 +16,10 @@ import com.dyl.common.core.domain.entity.SysUser;
  */
 @Component
 public class SysPermissionService {
-    @Autowired
+    @Resource
     private ISysRoleService roleService;
 
-    @Autowired
+    @Resource
     private ISysMenuService menuService;
 
     /**
@@ -30,7 +29,7 @@ public class SysPermissionService {
      * @return 角色权限信息
      */
     public Set<String> getRolePermission(SysUser user) {
-        Set<String> roles = new HashSet<String>();
+        Set<String> roles = new HashSet<>();
         // 管理员拥有所有权限
         if (user.isAdmin()) {
             roles.add("admin");
@@ -47,7 +46,7 @@ public class SysPermissionService {
      * @return 菜单权限信息
      */
     public Set<String> getMenuPermission(SysUser user) {
-        Set<String> perms = new HashSet<String>();
+        Set<String> perms = new HashSet<>();
         // 管理员拥有所有权限
         if (user.isAdmin()) {
             perms.add("*:*:*");

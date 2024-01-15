@@ -1,8 +1,8 @@
 package com.dyl.common.core.domain;
 
-import java.io.Serializable;
-
 import com.dyl.common.constant.HttpStatus;
+
+import java.io.Serializable;
 
 /**
  * 响应信息主体
