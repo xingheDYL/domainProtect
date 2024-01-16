@@ -5,10 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.dyl</groupId>
-    <artifactId>dyl</artifactId>
+    <artifactId>domainProtect</artifactId>
     <version>1.0.0</version>
 
-    <name>dyl</name>
+    <name>防护查询系统</name>
     <description>启铭星防护查询系统</description>
 
     <properties>
@@ -142,44 +142,44 @@
             <!-- 系统模块-->
             <dependency>
                 <groupId>com.dyl</groupId>
-                <artifactId>dyl-system</artifactId>
+                <artifactId>domainProtect-system</artifactId>
                 <version>${dyl.version}</version>
             </dependency>
 
             <!-- 核心模块 -->
             <dependency>
                 <groupId>com.dyl</groupId>
-                <artifactId>dyl-common-core</artifactId>
+                <artifactId>domainProtect-common-core</artifactId>
                 <version>${dyl.version}</version>
             </dependency>
 
             <!-- 数据库模块 -->
             <dependency>
                 <groupId>com.dyl</groupId>
-                <artifactId>dyl-common-mybatis</artifactId>
+                <artifactId>domainProtect-common-mybatis</artifactId>
                 <version>${dyl.version}</version>
             </dependency>
 
             <!-- 安全认证模块 -->
             <dependency>
                 <groupId>com.dyl</groupId>
-                <artifactId>dyl-common-security</artifactId>
+                <artifactId>domainProtect-common-security</artifactId>
                 <version>${dyl.version}</version>
             </dependency>
 
             <!-- web服务模块 -->
             <dependency>
                 <groupId>com.dyl</groupId>
-                <artifactId>dyl-common-web</artifactId>
+                <artifactId>domainProtect-common-web</artifactId>
                 <version>${dyl.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
 
     <modules>
-        <module>dyl-common</module>
-        <module>dyl-admin</module>
-        <module>dyl-system</module>
+        <module>domainProtect-common</module>
+        <module>domainProtect-admin</module>
+        <module>domainProtect-system</module>
     </modules>
     <packaging>pom</packaging>
 

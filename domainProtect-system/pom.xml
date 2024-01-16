@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>domainProtect</artifactId>
+        <groupId>com.dyl</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>domainProtect-system</artifactId>
+
+    <description>
+        system系统模块
+    </description>
+
+    <dependencies>
+
+        <!-- 核心工具 -->
+        <dependency>
+            <groupId>com.dyl</groupId>
+            <artifactId>domainProtect-common-core</artifactId>
+        </dependency>
+
+        <!-- 登录安全认证 -->
+        <dependency>
+            <groupId>com.dyl</groupId>
+            <artifactId>domainProtect-common-security</artifactId>
+        </dependency>
+
+        <!-- web服务 -->
+        <dependency>
+            <groupId>com.dyl</groupId>
+            <artifactId>domainProtect-common-web</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>
