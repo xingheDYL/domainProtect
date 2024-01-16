@@ -7,8 +7,8 @@ wqm:
   # 版权年份
   copyrightYear: 2024
   # 文件路径 示例（ Windows配置D:/user/uploadPath，Linux配置 /home/uploadPath）
-  profile: D:/Learn/uploadPath
-#  profile: /tmp/tools/uploadPath
+  #  profile: D:/Learn/uploadPath
+  profile: /tmp/tools/uploadPath
 
 # spring配置
 spring:

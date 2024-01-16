@@ -19,8 +19,6 @@ import javax.annotation.Resource;
 import javax.validation.Validator;
 import java.util.Date;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Administrator
@@ -47,7 +45,6 @@ public class DomainProtectServiceImpl extends ServiceImpl<DomainProtectMapper, D
     public DomainProtect getDomainProtectByDomain(String domain) {
         if (CharSequenceUtil.isNotBlank(domain)) {
             try {
-                String searchString;
                 Resolver resolver = new SimpleResolver("114.114.114.114");
                 Lookup lookup = new Lookup(domain, Type.CNAME);
                 lookup.setResolver(resolver);
@@ -58,12 +55,28 @@ public class DomainProtectServiceImpl extends ServiceImpl<DomainProtectMapper, D
                     Record[] records = lookup.getAnswers();
                     for (Record record : records) {
                         String url = record.rdataToString();
-                        String regex = "(\\w+\\.)*([a-zA-Z0-9]+\\.[a-zA-Z]+)";
-                        Pattern pattern = Pattern.compile(regex);
-                        Matcher matcher = pattern.matcher(url);
-                        if (matcher.find()) {
-                            searchString = matcher.group(2);
-                            return getDomainProtectByKeyword(searchString);
+                        String[] splits = url.split("\\.");
+                        int length = splits.length;
+                        StringBuilder stringBuilder = new StringBuilder();
+                        stringBuilder.append(splits[length - 2]).append(".").append(splits[length - 1]);
+                        if (CharSequenceUtil.isNotBlank(url)) {
+                            LambdaQueryWrapper<DomainProtect> queryWrapper = new LambdaQueryWrapper<>();
+                            queryWrapper.like(DomainProtect::getKeyword, stringBuilder.toString());
+                            List<DomainProtect> domainProtectList = list(queryWrapper);
+                            if (domainProtectList.isEmpty()) {
+                                return null;
+                            }
+                            int count = 3;
+                            while (domainProtectList.size() > 1) {
+                                queryWrapper = new LambdaQueryWrapper<>();
+                                queryWrapper.like(DomainProtect::getKeyword, stringBuilder.insert(0, splits[length - count] + ".").toString());
+                                domainProtectList = list(queryWrapper);
+                                if (domainProtectList.isEmpty()) {
+                                    return null;
+                                }
+                                count++;
+                            }
+                            return domainProtectList.get(0);
                         }
                     }
                 }
@@ -97,7 +110,7 @@ public class DomainProtectServiceImpl extends ServiceImpl<DomainProtectMapper, D
     @Override
     public DomainProtect getDomainProtectByKeyword(String keyword) {
         LambdaQueryWrapper<DomainProtect> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(DomainProtect::getKeyword, keyword);
+        queryWrapper.like(DomainProtect::getKeyword, keyword);
         return getOne(queryWrapper, false);
     }
 
